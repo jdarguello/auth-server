@@ -1,0 +1,37 @@
+server:
+    address: 0.0.0.0
+    port: 8080
+
+spring:
+    profiles:
+        active: cloud
+    application:
+        name: auth
+
+---
+
+spring:
+    config:
+        activate:
+            on-profile: test-unitarios
+    datasource:
+        username: test
+        password: 
+        url: jdbc:h2:mem:test-db
+        driver-class-name: org.h2.Driver
+
+---
+
+spring:
+    config:
+        activate:
+            on-profile: cloud
+    datasource:
+        username: ${DB_USER:admin}
+        password: ${DB_PASSWORD:ejemplo123}
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql:${DB_HOST:host.docker.internal}:${DB_PORT:5432}/${DB_NAME:usuarios}
+    jpa:
+        hibernate: 
+            ddl-auto: update
+
