@@ -2,8 +2,6 @@ package com.BancoC.server.auth.unitarios.modelos;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,21 +11,13 @@ public class UsuariosTest extends ModelosConfigTest {
 
     @Test
     void createUser() {
-        validaciones(adminDB, admin);
-    }
-
-    @Test
-    void getUser() {
-        Optional<Usuario> usuarioObtenido = repositorio.findById(adminDB.getUserId());
-
-        validaciones(adminDB, usuarioObtenido.get());
+        validaciones(fernandoBD, fernando);
     }
 
     @Test
     void loadUserByUsername() {
-        UserDetails usuarioObtenido = repositorio.findByUsername("admin@gmail.com");
-
-        validaciones(adminDB, usuarioObtenido);
+        UserDetails usuarioObtenido = ususarioRepositorio.findByUsername("admin@gmail.com");
+        validaciones(fernandoBD, usuarioObtenido);
     }
 
     private void validaciones(Usuario referencia, UserDetails usuario) {

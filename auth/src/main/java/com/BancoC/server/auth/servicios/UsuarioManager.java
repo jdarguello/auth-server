@@ -5,8 +5,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
-import com.BancoC.server.auth.modelos.Usuario;
-
 @Service
 public class UsuarioManager implements UserDetailsManager {
 
@@ -18,11 +16,6 @@ public class UsuarioManager implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails user) {
-        ((Usuario) user).getAuthorities().stream().forEach(
-            autoridad -> {
-                autoridad.otraCosa();
-            }
-        );
         throw new UnsupportedOperationException("Unimplemented method 'createUser'");
     }
 
