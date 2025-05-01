@@ -1,5 +1,7 @@
 package com.BancoC.server.auth.modelos;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Scope {
+public class Scope implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer scopeId;

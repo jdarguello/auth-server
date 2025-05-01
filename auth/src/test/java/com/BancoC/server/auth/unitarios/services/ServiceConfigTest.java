@@ -14,16 +14,20 @@ import org.springframework.util.SerializationUtils;
 import com.BancoC.server.auth.GeneralTest;
 import com.BancoC.server.auth.repositorios.PermisoRepositorio;
 import com.BancoC.server.auth.repositorios.RolRepositorio;
+import com.BancoC.server.auth.repositorios.ScopeRepositorio;
 import com.BancoC.server.auth.servicios.PermisoService;
 import com.BancoC.server.auth.servicios.RolService;
+import com.BancoC.server.auth.servicios.ScopeService;
 import com.BancoC.server.auth.servicios.contratos.PermisoOps;
 import com.BancoC.server.auth.servicios.contratos.RolOps;
+import com.BancoC.server.auth.servicios.contratos.ScopeOps;
 
 public abstract class ServiceConfigTest extends GeneralTest {
 
     //Services
     protected PermisoOps permisoOps;
     protected RolOps rolOps;
+    protected ScopeOps scopeOps;
 
     //Mock services
     protected PermisoOps mockPermisoOps;
@@ -31,6 +35,7 @@ public abstract class ServiceConfigTest extends GeneralTest {
     //Mock Repos
     private PermisoRepositorio permisoRepositorio;
     protected RolRepositorio rolRepositorio;
+    protected ScopeRepositorio scopeRepositorio;
 
     @Override
     @BeforeEach
@@ -39,7 +44,8 @@ public abstract class ServiceConfigTest extends GeneralTest {
 
         //Mocks
         mockPermisoRepo();
-        mockRolRepo();
+        mockRol();
+        mockScopeRepo();
 
         //Services
         definicionServices();
@@ -48,10 +54,37 @@ public abstract class ServiceConfigTest extends GeneralTest {
     private void definicionServices() {
         permisoOps = new PermisoService(permisoRepositorio);
         rolOps = new RolService(rolRepositorio, mockPermisoOps);
-
+        scopeOps = new ScopeService(scopeRepositorio);
     }
 
-    private void mockRolRepo() throws NotFoundException {
+    private void mockScopeRepo() {
+        scopeRepositorio = mock(ScopeRepositorio.class);
+
+        //Scopes
+        miBancolombiaBD = SerializationUtils.clone(miBancolombia);
+        miBancolombiaBD.setScopeId(1);
+
+        nequiAppBD = SerializationUtils.clone(nequiApp);
+        nequiAppBD.setScopeId(2);
+
+        //Mocks behavior
+        when(scopeRepositorio.save(miBancolombia))
+            .thenReturn(miBancolombiaBD);
+        
+        when(scopeRepositorio.findById(miBancolombiaBD.getScopeId()))
+            .thenReturn(Optional.of(miBancolombiaBD));
+
+        when(scopeRepositorio.findAll())
+            .thenReturn(List.of(miBancolombiaBD, nequiAppBD));
+
+        when(scopeRepositorio.findByOwner(miBancolombia.getOwner()))
+            .thenReturn(List.of(miBancolombiaBD));
+
+        when(scopeRepositorio.findByOwner(nequiApp.getOwner()))
+            .thenReturn(List.of(nequiAppBD));
+    }
+
+    private void mockRol() throws NotFoundException {
         rolRepositorio = spy(RolRepositorio.class);
         mockPermisoOps = mock(PermisoOps.class);
 

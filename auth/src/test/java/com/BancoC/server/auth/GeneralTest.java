@@ -1,7 +1,6 @@
 package com.BancoC.server.auth;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import com.BancoC.server.auth.modelos.Permiso;
 import com.BancoC.server.auth.modelos.Rol;
