@@ -1,5 +1,6 @@
 package com.BancoC.server.auth.modelos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Rol {
+public class Rol implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

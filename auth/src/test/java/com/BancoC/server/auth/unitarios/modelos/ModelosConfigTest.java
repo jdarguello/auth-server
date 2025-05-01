@@ -29,7 +29,7 @@ public abstract class ModelosConfigTest extends GeneralTest {
 
     @Override
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         super.setUp();  //=> cargar objetos de pruebas
 
         permisosBD();
