@@ -60,8 +60,8 @@ public class GeneralTest {
         definicionPermisos();
         definicionScopes();
         definicionesRoles();
-        definicionRoleBindings();
         definicionUsuarios();
+        definicionRoleBindings();
     }
 
     private void definicionUsuarios() {
@@ -83,9 +83,21 @@ public class GeneralTest {
             .usuario(sara)
         .build();
 
+        saraLectorNequiApp = RoleBinding.builder()
+            .rol(reader)
+            .scope(nequiApp)
+            .usuario(sara)
+        .build();
+
         fernandoLectorNequiApp = RoleBinding.builder()
             .rol(reader)
             .scope(nequiApp)
+            .usuario(fernando)
+        .build();
+
+        fernandoWriterMiBancolombia = RoleBinding.builder()
+            .rol(writerAndReader)
+            .scope(miBancolombia)
             .usuario(fernando)
         .build();
     }

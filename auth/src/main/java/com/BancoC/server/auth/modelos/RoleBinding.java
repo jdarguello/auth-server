@@ -1,5 +1,7 @@
 package com.BancoC.server.auth.modelos;
 
+import java.io.Serializable;
+
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString.Exclude;
 
 @Entity
 @Table(name = "role_binding")
@@ -33,7 +34,6 @@ public class RoleBinding implements GrantedAuthority{
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "userId", nullable = false)
     @JsonIgnore
-    @Exclude
     private Usuario usuario;
 
     @ManyToOne

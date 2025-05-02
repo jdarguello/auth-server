@@ -3,6 +3,7 @@ package com.BancoC.server.auth.unitarios.modelos;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ public class RoleBindingTest extends ModelosConfigTest {
 
     @Test
     void obtenerRoleBindingsPorUsuario() {
-        List<RoleBinding> roleBindings = roleBindingRepositorio.findByUsuario(fernando);
+        Collection<RoleBinding> roleBindings = roleBindingRepositorio.findByUsuarioAndScope(fernando, nequiAppBD);
 
         assertEquals(1, roleBindings.size());
     }
