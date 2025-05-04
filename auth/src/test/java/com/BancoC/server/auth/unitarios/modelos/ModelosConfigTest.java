@@ -10,14 +10,14 @@ import com.BancoC.server.auth.repositorios.PermisoRepositorio;
 import com.BancoC.server.auth.repositorios.RolRepositorio;
 import com.BancoC.server.auth.repositorios.RoleBindingRepositorio;
 import com.BancoC.server.auth.repositorios.ScopeRepositorio;
-import com.BancoC.server.auth.repositorios.UsusarioRepositorio;
+import com.BancoC.server.auth.repositorios.UsuarioRepositorio;
 
 @DataJpaTest
 @ActiveProfiles("test-unitarios")
 public abstract class ModelosConfigTest extends GeneralTest {
     
     @Autowired
-    protected UsusarioRepositorio ususarioRepositorio;
+    protected UsuarioRepositorio ususarioRepositorio;
     @Autowired
     protected PermisoRepositorio permisoRepositorio;
     @Autowired

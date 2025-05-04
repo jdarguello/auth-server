@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,18 +15,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.SerializationUtils;
 
 import com.BancoC.server.auth.GeneralTest;
+import com.BancoC.server.auth.modelos.RoleBinding;
 import com.BancoC.server.auth.repositorios.PermisoRepositorio;
 import com.BancoC.server.auth.repositorios.RolRepositorio;
 import com.BancoC.server.auth.repositorios.RoleBindingRepositorio;
 import com.BancoC.server.auth.repositorios.ScopeRepositorio;
+import com.BancoC.server.auth.repositorios.UsuarioRepositorio;
 import com.BancoC.server.auth.servicios.PermisoService;
 import com.BancoC.server.auth.servicios.RolService;
 import com.BancoC.server.auth.servicios.RoleBindingService;
 import com.BancoC.server.auth.servicios.ScopeService;
+import com.BancoC.server.auth.servicios.UsuarioService;
 import com.BancoC.server.auth.servicios.contratos.PermisoOps;
 import com.BancoC.server.auth.servicios.contratos.RolOps;
 import com.BancoC.server.auth.servicios.contratos.RoleBindingOps;
 import com.BancoC.server.auth.servicios.contratos.ScopeOps;
+import com.BancoC.server.auth.servicios.contratos.UsuarioOps;
 
 public abstract class ServiceConfigTest extends GeneralTest {
 
@@ -34,18 +39,21 @@ public abstract class ServiceConfigTest extends GeneralTest {
     protected RolOps rolOps;
     protected ScopeOps scopeOps;
     protected RoleBindingOps roleBindingOps;
+    protected UsuarioOps usuarioOps;
 
     //Mock services
     protected PermisoOps mockPermisoOps;
     protected RolOps mockRolOps;
     protected ScopeOps mockScopeOps;
     protected UserDetailsService mockUserService;
+    protected RoleBindingOps mockRoleBindingOps;
 
     //Mock Repos
     private PermisoRepositorio permisoRepositorio;
     protected RolRepositorio rolRepositorio;
     protected ScopeRepositorio scopeRepositorio;
     protected RoleBindingRepositorio roleBindingRepositorio;
+    protected UsuarioRepositorio usuarioRepositorio;
 
     @Override
     @BeforeEach
@@ -68,14 +76,42 @@ public abstract class ServiceConfigTest extends GeneralTest {
         rolOps = new RolService(rolRepositorio, mockPermisoOps);
         scopeOps = new ScopeService(scopeRepositorio);
         roleBindingOps = new RoleBindingService(mockUserService, roleBindingRepositorio, mockRolOps, mockScopeOps);
+        usuarioOps = new UsuarioService(mockRoleBindingOps, mockScopeOps, mockRolOps, usuarioRepositorio);
     }
 
-    private void mockUsuario() {
+    private void mockUsuario() throws UsernameNotFoundException, IllegalArgumentException, NotFoundException {
+        usuarioRepositorio = mock(UsuarioRepositorio.class);
+        mockRoleBindingOps = mock(RoleBindingOps.class);
+
+        //Usuarios
         saraBD = SerializationUtils.clone(sara);
         saraBD.setUserId(1L);
 
         fernandoBD = SerializationUtils.clone(fernando);
         fernandoBD.setUserId(2L);
+
+        //Mocks behavior
+        when(usuarioRepositorio.save(sara))
+            .thenReturn(saraBD);
+
+        when(usuarioRepositorio.save(fernando))
+            .thenReturn(fernando);
+
+        when(usuarioRepositorio.findByUsername(sara.getUsername()))
+            .thenReturn(saraBD);
+
+        when(mockRoleBindingOps.nuevoBinding(
+            RoleBinding.builder()
+                .rol(adminBD)
+                .scope(nequiAppBD)
+                .usuario(saraBD)
+            .build()))
+            .thenReturn(
+                RoleBinding.builder()
+                .roleBindingId(11L)
+                .rol(adminBD)
+                .scope(nequiAppBD)
+            .build());
     }
 
     private void mockRoleBinding() throws NotFoundException {
@@ -118,6 +154,9 @@ public abstract class ServiceConfigTest extends GeneralTest {
 
         when(mockScopeOps.obtenerScope(miBancolombiaBD.getScopeId()))
             .thenReturn(miBancolombiaBD);
+
+        when(mockScopeOps.obtenerScope(nequiAppBD.getScopeId()))
+            .thenReturn(nequiAppBD);
 
         when(mockUserService.loadUserByUsername(fernando.getUsername()))
             .thenThrow(new UsernameNotFoundException("Fernando not found"));
