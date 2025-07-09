@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cdt-businessflow
+  description: Administra los flujos de negocio correspondientes a una Inversión Virtual en Bancolombia
+  labels:
+    bancolombia.com/businessflows: cdt
+  annotations:
+    bancolombia.com/service-discovery: cdt-businessflows
+  tags:
+    - java
+    - kubernetes
+  links:
+    - url: https://admin.bancolombia.com
+      title: GitOps Dashboard
+      icon: dashboard
+      type: admin-dashboard
+spec:
+  type: website
+  lifecycle: production
+  owner: artist-relations-team
+  system: public-websites
