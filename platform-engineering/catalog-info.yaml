@@ -1,12 +1,12 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: cdt-businessflow
-  description: Administra los flujos de negocio correspondientes a una Inversión Virtual en Bancolombia
+  name: auth-service
+  description: Protocolos oficiales de autenticación/autorización en Bancolombia
   labels:
-    bancolombia.com/businessflows: cdt
+    bancolombia.com/support: auth
   annotations:
-    bancolombia.com/service-discovery: cdt-businessflows
+    bancolombia.com/service-discovery: auth-service
   tags:
     - java
     - kubernetes
@@ -16,7 +16,7 @@ metadata:
       icon: dashboard
       type: admin-dashboard
 spec:
-  type: website
+  type: service
   lifecycle: production
-  owner: artist-relations-team
-  system: public-websites
+  owner: LdC IAM
+  system: Ciberseguridad
