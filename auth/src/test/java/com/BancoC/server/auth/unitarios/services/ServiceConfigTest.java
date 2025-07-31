@@ -4,7 +4,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +24,7 @@ import com.BancoC.server.auth.servicios.PermisoService;
 import com.BancoC.server.auth.servicios.RolService;
 import com.BancoC.server.auth.servicios.RoleBindingService;
 import com.BancoC.server.auth.servicios.ScopeService;
-import com.BancoC.server.auth.servicios.UsuarioService;
+import com.BancoC.server.auth.servicios.UsuarioManager;
 import com.BancoC.server.auth.servicios.contratos.PermisoOps;
 import com.BancoC.server.auth.servicios.contratos.RolOps;
 import com.BancoC.server.auth.servicios.contratos.RoleBindingOps;
@@ -76,7 +75,7 @@ public abstract class ServiceConfigTest extends GeneralTest {
         rolOps = new RolService(rolRepositorio, mockPermisoOps);
         scopeOps = new ScopeService(scopeRepositorio);
         roleBindingOps = new RoleBindingService(mockUserService, roleBindingRepositorio, mockRolOps, mockScopeOps);
-        usuarioOps = new UsuarioService(mockRoleBindingOps, mockScopeOps, mockRolOps, usuarioRepositorio);
+        usuarioOps = new UsuarioManager(mockRoleBindingOps, mockScopeOps, mockRolOps, usuarioRepositorio);
     }
 
     private void mockUsuario() throws UsernameNotFoundException, IllegalArgumentException, NotFoundException {

@@ -18,14 +18,14 @@ import com.BancoC.server.auth.servicios.contratos.ScopeOps;
 import com.BancoC.server.auth.servicios.contratos.UsuarioOps;
 
 @Service
-public class UsuarioService implements UsuarioOps {
+public class UsuarioManager implements UsuarioOps {
 
     private final RoleBindingOps roleBindingOps;
     private final ScopeOps scopeOps;
     private final RolOps rolOps;
     private final UsuarioRepositorio repo;
 
-    public UsuarioService (RoleBindingOps roleBindingOps, ScopeOps scopeOps,
+    public UsuarioManager (RoleBindingOps roleBindingOps, ScopeOps scopeOps,
             RolOps rolOps, UsuarioRepositorio repo) {
         this.roleBindingOps = roleBindingOps;
         this.scopeOps = scopeOps;
