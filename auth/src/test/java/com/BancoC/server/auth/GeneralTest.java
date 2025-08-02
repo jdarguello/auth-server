@@ -1,6 +1,7 @@
 package com.BancoC.server.auth;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.util.SerializationUtils;
 
 import com.BancoC.server.auth.modelos.Permiso;
 import com.BancoC.server.auth.modelos.Rol;
@@ -117,6 +118,15 @@ public class GeneralTest {
             .nombre("actualizar")
             .descripcion("actualizar info")
         .build();
+
+        readBD = SerializationUtils.clone(read);
+        readBD.setPermisoId(10);
+
+        writeBD = SerializationUtils.clone(write);
+        writeBD.setPermisoId(11);
+
+        updateBD = SerializationUtils.clone(update);
+        updateBD.setPermisoId(12);
     }
 
     private void definicionScopes() {

@@ -228,13 +228,6 @@ public abstract class ServiceConfigTest extends GeneralTest {
     private void mockPermisoRepo() {
         permisoRepositorio = mock(PermisoRepositorio.class);
 
-        //Permisos
-        readBD = SerializationUtils.clone(read);
-        readBD.setPermisoId(10);
-
-        writeBD = SerializationUtils.clone(write);
-        writeBD.setPermisoId(11);
-
         //Mocks behaviors
         when(permisoRepositorio.findById(10))
             .thenReturn(Optional.of(readBD));
