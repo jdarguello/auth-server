@@ -196,13 +196,6 @@ public abstract class ServiceConfigTest extends GeneralTest {
         rolRepositorio = spy(RolRepositorio.class);
         mockPermisoOps = mock(PermisoOps.class);
 
-        //Roles
-        readerBD = SerializationUtils.clone(reader);
-        readerBD.setRolId(1L);
-
-        adminBD = SerializationUtils.clone(admin);
-        adminBD.setRolId(5L);
-
         //Mocks Repo behavior
         when(rolRepositorio.save(admin))
             .thenReturn(adminBD);

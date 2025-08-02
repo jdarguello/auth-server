@@ -153,6 +153,14 @@ public class GeneralTest {
         writerAndReader = Rol.builder()
             .nombre("escritor")
         .build();
-    }
 
+        readerBD = SerializationUtils.clone(reader);
+        readerBD.setRolId(1L);
+
+        adminBD = SerializationUtils.clone(admin);
+        adminBD.setRolId(5L);
+
+        writerAndReaderBD = SerializationUtils.clone(writerAndReader);
+        writerAndReaderBD.setRolId(6L);
+    }
 }

@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.BancoC.server.auth.GeneralTest;
 import com.BancoC.server.auth.servicios.contratos.PermisoOps;
+import com.BancoC.server.auth.servicios.contratos.RolOps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -38,10 +39,18 @@ public class ControladorConfigTest extends GeneralTest {
             return mock(PermisoOps.class);
         }
 
+        @Bean
+        public RolOps rolService() {
+            return mock(RolOps.class);
+        }
+
     }
 
     @Autowired
     private PermisoOps permisoService;
+
+    @Autowired
+    private RolOps rolService;
 
     @Override
     @BeforeEach
@@ -53,7 +62,22 @@ public class ControladorConfigTest extends GeneralTest {
 
         //Comportamiento de mocks
         this.permisosMocks();
+        this.rolMocks();
 
+    }
+
+    private void rolMocks() throws NotFoundException {
+        when(rolService.obtenerRoles())
+            .thenReturn(List.of(adminBD, readerBD, writerAndReaderBD));
+        
+        when(rolService.obtenerRol(readerBD.getRolId()))
+            .thenReturn(readerBD);
+        
+        when(rolService.obtenerRol(244L))
+            .thenThrow(new NotFoundException());
+
+        when(rolService.nuevoRol(admin))
+            .thenReturn(adminBD);
     }
 
     private void permisosMocks() throws NotFoundException {
