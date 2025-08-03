@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -57,6 +58,9 @@ public class RolControladorTest extends ControladorConfigTest {
 
     @Test
     void obtenerRolPorIdNotFound() throws Exception {
+        when(rolService.obtenerRol(244L))
+            .thenThrow(new NotFoundException());
+        
         mockMvc.perform(
             get("/api/rol/{id}", 244))
         .andExpect(status().isNotFound());
@@ -83,6 +87,12 @@ public class RolControladorTest extends ControladorConfigTest {
 
     @Test
     void nuevoRol400() throws Exception {
+        when(rolService.nuevoRol(
+            Rol.builder()
+                .nombre("")
+            .build()
+        )).thenThrow(new IllegalArgumentException());
+        
         String requestBody = objectMapper.writeValueAsString(
             Rol.builder()
                 .nombre("")

@@ -2,12 +2,14 @@ package com.BancoC.server.auth.unitarios.controladores;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.BancoC.server.auth.modelos.Permiso;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -53,6 +55,9 @@ public class PermisoControladorTest extends ControladorConfigTest {
 
     @Test
     void obtenerPermisoPorIdNotFound() throws Exception {
+        when(permisoService.obtenerPorId(125))
+            .thenThrow(new NotFoundException());
+
         mockMvc.perform(
             get("/api/permiso/{id}", 125))
         .andExpect(status().isNotFound());
@@ -76,6 +81,9 @@ public class PermisoControladorTest extends ControladorConfigTest {
 
     @Test
     void obtenerPermisoPorNombreNotFound() throws Exception {
+        when(permisoService.obtenerPorNombre("noExiste"))
+            .thenThrow(new NotFoundException());
+
         mockMvc.perform(
             get("/api/permiso")
             .param("nombre", "noExiste"))

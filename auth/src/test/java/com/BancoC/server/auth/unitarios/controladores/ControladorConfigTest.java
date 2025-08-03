@@ -1,5 +1,6 @@
 package com.BancoC.server.auth.unitarios.controladores;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -48,10 +49,10 @@ public class ControladorConfigTest extends GeneralTest {
     }
 
     @Autowired
-    private PermisoOps permisoService;
+    protected PermisoOps permisoService;
 
     @Autowired
-    private RolOps rolService;
+    protected RolOps rolService;
 
     @Override
     @BeforeEach
@@ -73,15 +74,6 @@ public class ControladorConfigTest extends GeneralTest {
         
         when(rolService.obtenerRol(readerBD.getRolId()))
             .thenReturn(readerBD);
-        
-        when(rolService.obtenerRol(244L))
-            .thenThrow(new NotFoundException());
-
-        when(rolService.nuevoRol(
-            Rol.builder()
-                .nombre("")
-            .build()
-        )).thenThrow(new IllegalArgumentException());
 
         when(rolService.nuevoRol(admin))
             .thenReturn(adminBD);
@@ -93,12 +85,6 @@ public class ControladorConfigTest extends GeneralTest {
         
         when(permisoService.obtenerPorId(readBD.getPermisoId()))
             .thenReturn(readBD);
-
-        when(permisoService.obtenerPorId(125))
-            .thenThrow(new NotFoundException());
-        
-        when(permisoService.obtenerPorNombre("noExiste"))
-            .thenThrow(new NotFoundException());
         
         when(permisoService.obtenerPorNombre(write.getNombre()))
             .thenReturn(writeBD);
