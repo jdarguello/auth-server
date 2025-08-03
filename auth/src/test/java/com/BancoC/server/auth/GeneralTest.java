@@ -139,6 +139,12 @@ public class GeneralTest {
             .appName("Nequi App")
             .owner("Nequi")
         .build();
+
+        miBancolombiaBD = SerializationUtils.clone(miBancolombia);
+        miBancolombiaBD.setScopeId(1);
+
+        nequiAppBD = SerializationUtils.clone(nequiApp);
+        nequiAppBD.setScopeId(2);
     }
 
     private void definicionesRoles() {

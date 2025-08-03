@@ -167,14 +167,7 @@ public abstract class ServiceConfigTest extends GeneralTest {
 
     private void mockScopeRepo() {
         scopeRepositorio = mock(ScopeRepositorio.class);
-
-        //Scopes
-        miBancolombiaBD = SerializationUtils.clone(miBancolombia);
-        miBancolombiaBD.setScopeId(1);
-
-        nequiAppBD = SerializationUtils.clone(nequiApp);
-        nequiAppBD.setScopeId(2);
-
+        
         //Mocks behavior
         when(scopeRepositorio.save(miBancolombia))
             .thenReturn(miBancolombiaBD);

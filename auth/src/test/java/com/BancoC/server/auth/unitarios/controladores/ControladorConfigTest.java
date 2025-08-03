@@ -20,6 +20,7 @@ import com.BancoC.server.auth.GeneralTest;
 import com.BancoC.server.auth.modelos.Rol;
 import com.BancoC.server.auth.servicios.contratos.PermisoOps;
 import com.BancoC.server.auth.servicios.contratos.RolOps;
+import com.BancoC.server.auth.servicios.contratos.ScopeOps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -46,6 +47,11 @@ public class ControladorConfigTest extends GeneralTest {
             return mock(RolOps.class);
         }
 
+        @Bean
+        public ScopeOps scopeService() {
+            return mock(ScopeOps.class);
+        }
+
     }
 
     @Autowired
@@ -53,6 +59,9 @@ public class ControladorConfigTest extends GeneralTest {
 
     @Autowired
     protected RolOps rolService;
+
+    @Autowired
+    protected ScopeOps scopeService;
 
     @Override
     @BeforeEach
@@ -65,7 +74,15 @@ public class ControladorConfigTest extends GeneralTest {
         //Comportamiento de mocks
         this.permisosMocks();
         this.rolMocks();
+        this.scopeMocks();
+    }
 
+    private void scopeMocks() throws NotFoundException {
+        when(scopeService.obtenerScope(miBancolombiaBD.getScopeId()))
+            .thenReturn(miBancolombiaBD);
+
+        when(scopeService.nuevoScope(miBancolombia))
+            .thenReturn(miBancolombiaBD);
     }
 
     private void rolMocks() throws NotFoundException {
