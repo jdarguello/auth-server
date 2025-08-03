@@ -9,7 +9,7 @@ import com.BancoC.server.auth.modelos.Rol;
 public interface RolOps {
     Rol nuevoRol(Rol rol) throws IllegalArgumentException;
     Rol obtenerRol(Long rolId) throws NotFoundException;
-    Rol addPermiso(Long rolId, Integer permisoId) throws NotFoundException;
+    Rol addPermiso(Long rolId, Integer permisoId) throws NotFoundException, IllegalArgumentException;
     Collection<Rol> obtenerRoles();
     Boolean eliminarRol(Long rolId);
 }

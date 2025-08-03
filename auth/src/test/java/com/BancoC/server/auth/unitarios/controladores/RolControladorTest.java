@@ -82,9 +82,34 @@ public class RolControladorTest extends ControladorConfigTest {
     }
 
     @Test
-    void nuevoRol400() {
-        
+    void nuevoRol400() throws Exception {
+        String requestBody = objectMapper.writeValueAsString(
+            Rol.builder()
+                .nombre("")
+            .build()
+        );
+
+        mockMvc.perform(
+            post("/api/rol/nuevo")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody))
+        .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void addPermisos200 () throws Exception {
+        String requestBody = objectMapper.writeValueAsString(
+            List.of(writeBD, readBD)
+        );
+
+        mockMvc.perform(
+            put("/api/rol/{id}", writerAndReaderBD.getRolId())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody))
+        .andExpect(status().isOk());
+    }
+
+    
 
     private void validarRol(
         Rol rolRef, Rol rolObtenido

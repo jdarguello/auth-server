@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.BancoC.server.auth.GeneralTest;
+import com.BancoC.server.auth.modelos.Rol;
 import com.BancoC.server.auth.servicios.contratos.PermisoOps;
 import com.BancoC.server.auth.servicios.contratos.RolOps;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -75,6 +76,12 @@ public class ControladorConfigTest extends GeneralTest {
         
         when(rolService.obtenerRol(244L))
             .thenThrow(new NotFoundException());
+
+        when(rolService.nuevoRol(
+            Rol.builder()
+                .nombre("")
+            .build()
+        )).thenThrow(new IllegalArgumentException());
 
         when(rolService.nuevoRol(admin))
             .thenReturn(adminBD);

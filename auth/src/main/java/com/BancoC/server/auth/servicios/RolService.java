@@ -41,7 +41,7 @@ public class RolService implements RolOps {
     }
 
     @Override
-    public Rol addPermiso(Long rolId, Integer permisoId) throws NotFoundException {
+    public Rol addPermiso(Long rolId, Integer permisoId) throws NotFoundException, IllegalArgumentException {
         Rol rol = this.obtenerRol(rolId);
         Permiso permiso = service.obtenerPorId(permisoId);
         rol.getPermisos().add(permiso);
